@@ -1,6 +1,6 @@
 #Mock api 
 
-To run the api server run below commands 
+To run the api server run the below command 
 
 node index.js
 
