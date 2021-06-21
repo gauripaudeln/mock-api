@@ -67,6 +67,28 @@ const clients  = [
   
 ];
 
+const contracts =[{"Name":"WDLF01- Sweetbarry farm construction" , "ExpirationDate" :"07/02/2021"},
+{"Name":"LFDF01 - Cherrypoint follow OLM" , "ExpirationDate" :"07/02/2021"},
+{"Name":"DGR098 - Design duild Repairs"  , "ExpirationDate" :"07/15/2021"},
+{"Name":"BLD023 - Austin downtown Tower construction" , "ExpirationDate" :"06/07/2021"},
+{"Name":"ARD004 - Aus airport extension" , "ExpirationDate" :"06/23/2021"},
+{"Name":"NYC004 - Nyc subway improvement" , "ExpirationDate" :"07/08/2021"},
+{"Name":"ORD234 - ORD runway maintenance" , "ExpirationDate" :"07/08/2021"},
+{"Name":"SEA053 - Seattle hazzard tree removal branch" , "ExpirationDate" :"07/14/2021"},
+]
+
+
+const awards = [ 
+  {"Name":"WDLF01- Sweetbarry farm construction" , "TO": "TO1", "MOD" :"MOD1", "TaskDescription" :"Description 1", "ContractType" :"CT1" , "ProjectType" : "PJ1",  "AwardDate" :"01/20/2021", "AwardValue":"20000000"},
+{"Name":"LFDF01 - Cherrypoint follow OLM" , "TO": "TO2", "MOD" :"MOD2", "TaskDescription" :"Description 2", "ContractType" :"CT1" , "ProjectType" : "PJ2",  "AwardDate" :"05/20/2021", "AwardValue":"30000000"},
+{"Name":"DGR098 - Design duild Repairs"  , "TO": "TO2", "MOD" :"MOD2", "TaskDescription" :"Description 3", "ContractType" :"CT1" , "ProjectType" : "PJ3",  "AwardDate" :"05/20/2021", "AwardValue":"25000000"},
+{"Name":"BLD023 - Austin downtown Tower construction" , "TO": "TO2", "MOD" :"MOD3", "TaskDescription" :"Description 4", "ContractType" :"CT2" , "ProjectType" : "PJ1",  "AwardDate" :"06/20/2021", "AwardValue":"100000000"},
+{"Name":"ARD004 - Aus airport extension" , "TO": "TO3", "MOD" :"MOD3", "TaskDescription" :"Description 5", "ContractType" :"CT2" , "ProjectType" : "PJ2",  "AwardDate" :"06/15/2021", "AwardValue":"200000000"},
+{"Name":"NYC004 - Nyc subway improvement" , "TO": "TO4", "MOD" :"MOD4",  "TaskDescription" :"Description 6","ContractType" :"CT3" , "ProjectType" : "PJ3",  "AwardDate" :"04/20/2021", "AwardValue":"45000000"},
+{"Name":"ORD234 - ORD runway maintenance" , "TO": "TO5", "MOD" :"MOD5",  "TaskDescription" :"Description 7","ContractType" :"CT3" , "ProjectType" : "PJ4",  "AwardDate" :"03/20/2021", "AwardValue":"60000000"},
+{"Name":"SEA053 - Seattle hazzard tree removal branch" ,"TO": "TO6", "MOD" :"MOD6", "TaskDescription" :"Description 8", "ContractType" :"CT3" , "ProjectType" : "PJ4",  "AwardDate" :"05/20/2021", "AwardValue":"80000000"},
+];
+
 
 
 var express = require('express');
@@ -90,6 +112,25 @@ server.get('/categories',(req,res)=> {
 
 server.get('/clients',(req,res)=> {
   res.send(clients);
+}); 
+
+
+server.get('/awards',(req,res)=> {
+  
+  let filteredAwards = awards;
+  if(req.query.days) {
+    let numberOfDaysBack = req.query.days;
+    //console.log(numberOfDaysBack);
+    let fromDate = new Date(new Date().getTime() - (numberOfDaysBack * 24 * 60 * 60 * 1000));
+    //console.log(fromDate);
+    filteredAwards = awards.filter(a=> new Date(a.AwardDate).getTime() > fromDate.getTime())
+  }
+  res.send(filteredAwards);
+}); 
+
+
+server.get('/contracts',(req,res)=> {
+  res.send(contracts);
 }); 
 
 server.listen(8080,()=>{
